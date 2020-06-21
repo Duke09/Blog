@@ -12,9 +12,15 @@ def post_home(request):
     qs_list = Post.objects.active()        #.order_by("-timestamp")
     if request.user.is_staff or request.user.is_superuser:
         qs_list = Post.objects.all()
+
+    query = request.GET.get("q")
+    if query:
+        qs_list = qs_list.filter(title__icontains=query)
+
     paginator = Paginator(qs_list, 2)
     page_num = 'page'
     page = request.GET.get(page_num)
+
     try:
         qs = paginator.page(page)
     except PageNotAnInteger:
