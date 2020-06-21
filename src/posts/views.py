@@ -29,10 +29,10 @@ def post_home(request):
 
 def post_detail(request, id):
     instance = get_object_or_404(Post, id=id)
-    share_string = quote_plus(instance.content)
+    # share_string = quote_plus(instance.content)
     context = {
         'obj': instance,
-        "share_string": share_string
+        # "share_string": share_string
     }
     return render(request, "posts/detail.html", context)
 
