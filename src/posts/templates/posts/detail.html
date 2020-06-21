@@ -14,7 +14,7 @@
                     <p class="card-text"><small class="text-muted">Publish Date {{ obj.publish }}</small></p>
                 {% endif %}
                 <h5 class="card-title">{{ obj.title }}</h5>
-                <p class="card-text">{{obj.content}}</p>
+                <p class="card-text"><div class="content-markdown">{{ obj.content }}</div></p>
                 <p class="card-text"><small class="text-muted">Last updated {{ obj.updated }} | Author {{ obj.user }}</small></p>
                 <p class="card-text">Share on 
                     <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"> Facebook </a>|
