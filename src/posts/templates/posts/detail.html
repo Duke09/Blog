@@ -11,7 +11,12 @@
             <h5 class="card-title">{{ obj.title }}</h5>
             <p class="card-text">{{obj.content}}</p>
             <p class="card-text"><small class="text-muted">Last updated {{ obj.updated }}</small></p>
+            <p class="card-text">Share on 
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"> Facebook </a>|
+                <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}"> Twitter </a>|
+                <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ obj.title }}"> Reddit </a></p>
             </div>
         </div>
     </div>
+    {{share_string}}
 {% endblock %}
