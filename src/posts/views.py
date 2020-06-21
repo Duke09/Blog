@@ -1,19 +1,66 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Post
+from .forms import PostForm
 # Create your views here.
 def post_home(request):
-    qs = Post.objects.all()
+    qs_list = Post.objects.all().order_by("-timestamp")
+    paginator = Paginator(qs_list, 2)
+
+    page = request.get('page')
+    try:
+        qs = paginator.page(page)
+    except PageNotAnInteger:
+        qs = pageinator.page(1)
+    except EmptyPage:
+        qs = paginator.page(paginator.num_pages)
+        
     context = {
         "object_list": qs
     }
     # return HttpResponse("Hello")
     return render(request, "posts/home.html", context)
 
-def post_detail(request):
-    instance = get_object_or_404(Post, id=1)
+def post_detail(request, id):
+    instance = get_object_or_404(Post, id=id)
     context = {
-        'object_list': instance
+        'obj': instance
     }
     return render(request, "posts/detail.html", context)
+
+def post_create(request):
+    form = PostForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        messages.success(request, "Post Created")
+        return HttpResponseRedirect(instance.get_absolute_url())
+    else:
+        messages.error(request, "An error occured while creating the post")
+    context = {
+        "form": form
+    }
+    return render(request, "posts/create.html", context)
+
+def post_update(request, id):
+    instance = get_object_or_404(Post, id=id)
+    form = PostForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        messages.success(request, "Post Updated")
+        return HttpResponseRedirect(instance.get_absolute_url())
+    context = {
+        "obj": instance,
+        "form": form
+    }
+    return render(request, "Posts/update.html", context)
+
+def post_delete(request, id):
+    instance = get_object_or_404(Post, id=id)
+    instance.delete()
+    messages.success(request, "Post Deleted")
+    return redirect("posts:home")

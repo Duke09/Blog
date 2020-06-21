@@ -7,10 +7,16 @@
     <h1>Blog</h1>
     <br>
     {% for obj in object_list %}
-        {{obj.id}}-{{ obj.title }}
+        <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
         {{ obj.timestamp }}
         <br>
         <br>
     {% endfor %}
+    <div class="paginator">
+        <span class="step-links">
+            {% if object_list.has_previous %}
+                <a href="?page={{ object_list.previous_page_number }}">Previous</a>
+        </span>
+    </div>
 </div>
 {% endblock %}
