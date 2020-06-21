@@ -1,6 +1,6 @@
 from urllib.parse import quote_plus
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -37,9 +37,13 @@ def post_detail(request, id):
     return render(request, "posts/detail.html", context)
 
 def post_create(request):
+    if not request.user.is_authenticated:
+        raise Http404
+
     form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         instance = form.save(commit=False)
+        instance.user = request.user
         instance.save()
         messages.success(request, "Post Created")
         return HttpResponseRedirect(instance.get_absolute_url())
@@ -49,6 +53,9 @@ def post_create(request):
     return render(request, "posts/create.html", context)
 
 def post_update(request, id):
+    if not request.user.is_authenticated:
+        raise Http404
+
     instance = get_object_or_404(Post, id=id)
     form = PostForm(request.POST or None, request.FILES or None, instance=instance)
     if form.is_valid():

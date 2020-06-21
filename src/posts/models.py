@@ -2,9 +2,19 @@ from django.db import models
 from django.urls import reverse
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
+from django.conf import settings
+
+User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class Post(models.Model):
+    user = models.ForeignKey(
+        User,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+
     title = models.CharField(
         max_length=120,
     )
