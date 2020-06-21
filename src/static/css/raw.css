@@ -7,3 +7,11 @@
 .container{
     margin-top: 5em;
 }
+
+.card .card-btn{
+    text-decoration: none;
+}
+
+.blockquote-footer{
+    font-size: 12px;
+}

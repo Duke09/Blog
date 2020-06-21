@@ -7,10 +7,20 @@
     <h1>Blog</h1>
     <br>
     {% for obj in object_list %}
-        <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
-        {{ obj.timestamp }}
-        <br>
-        <br>
+        <div class="card">
+            <a href="{{ obj.get_absolute_url }}" class="card-btn">
+            <div class="card-header">
+                <h3>{{ obj.title }}</h3>
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p>{{ obj.content|linebreaks|truncatewords:10 }}</p>
+                <footer class="blockquote-footer">{{ obj.timestamp }}</footer>
+              </blockquote>
+            </div>
+            </a>
+          </div>
+          <br>
     {% endfor %}
     <div class="paginator">
         <span class="step-links">

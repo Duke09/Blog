@@ -9,6 +9,11 @@ class Post(models.Model):
 
     content = models.TextField()
 
+    image = models.ImageField(
+        blank=True,
+        null=True,
+    )
+    
     timestamp = models.DateTimeField(
         auto_now_add=True
     )
@@ -24,3 +29,9 @@ class Post(models.Model):
         return reverse("posts:detail", kwargs={
             "id": self.id
         })
+
+    class Meta:
+        ordering = [
+            "-timestamp", 
+            "-updated"
+        ]

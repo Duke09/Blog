@@ -5,10 +5,11 @@
 {% block content %}
 <div class="container">
     <h1>New Blog</h1>
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Create">
+        <br>
+        <input type="submit" value="Create" class="btn btn-outline-primary">
     </form>
 </div>
 {% endblock %}
