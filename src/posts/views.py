@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Post
 from .forms import PostForm
+from django.db.models import Q
 
 # Create your views here.
 def post_home(request):
@@ -15,7 +16,10 @@ def post_home(request):
 
     query = request.GET.get("q")
     if query:
-        qs_list = qs_list.filter(title__icontains=query)
+        qs_list = qs_list.filter(
+            Q(title__icontains=query)|
+            Q(content__icontains=query)
+        )
 
     paginator = Paginator(qs_list, 2)
     page_num = 'page'
