@@ -9,17 +9,18 @@ from .forms import PostForm
 def post_home(request):
     qs_list = Post.objects.all().order_by("-timestamp")
     paginator = Paginator(qs_list, 2)
-
-    page = request.get('page')
+    page_num = 'page'
+    page = request.GET.get(page_num)
     try:
         qs = paginator.page(page)
     except PageNotAnInteger:
-        qs = pageinator.page(1)
+        qs = paginator.page(1)
     except EmptyPage:
         qs = paginator.page(paginator.num_pages)
-        
+
     context = {
-        "object_list": qs
+        "object_list": qs,
+        'page_num': page_num
     }
     # return HttpResponse("Hello")
     return render(request, "posts/home.html", context)
@@ -27,7 +28,7 @@ def post_home(request):
 def post_detail(request, id):
     instance = get_object_or_404(Post, id=id)
     context = {
-        'obj': instance
+        'obj': instance,
     }
     return render(request, "posts/detail.html", context)
 
