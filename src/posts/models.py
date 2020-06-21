@@ -7,6 +7,10 @@ from django.conf import settings
 User = settings.AUTH_USER_MODEL
 
 # Create your models here.
+class PostManager(models.Manager):
+    def active(self, *args, **kwargs):
+        return super(PostManager, self).filter(draft=False).filter(publish__lte=timezone.now())
+
 class Post(models.Model):
     user = models.ForeignKey(
         User,
@@ -26,6 +30,15 @@ class Post(models.Model):
         null=True,
     )
 
+    draft = models.BooleanField(
+        default=False
+    )
+
+    publish = models.DateTimeField(
+        auto_now=False,
+        auto_now_add=False
+    )
+
     timestamp = models.DateTimeField(
         auto_now_add=True
     )
@@ -39,6 +52,8 @@ class Post(models.Model):
         blank=True,
         null=True
     )
+
+    objects = PostManager()
 
     def __str__(self):
         return self.title
@@ -73,3 +88,4 @@ def post_receiver(sender, instance, *args, **kwargs):
         instance.slug = slug_generator(instance)
 
 pre_save.connect(post_receiver, sender=Post)
+from django.utils import timezone

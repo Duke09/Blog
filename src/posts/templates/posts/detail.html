@@ -9,6 +9,10 @@
         <div class="card">
             <img class="card-img-top" src="{{ obj.image.url }}" alt="Card image cap">
             <div class="card-body">
+                {% if obj.draft %}
+                    <h5 class="card-title" style="color: rgb(209, 89, 89);">Draft</h5>
+                    <p class="card-text"><small class="text-muted">Publish Date {{ obj.publish }}</small></p>
+                {% endif %}
                 <h5 class="card-title">{{ obj.title }}</h5>
                 <p class="card-text">{{obj.content}}</p>
                 <p class="card-text"><small class="text-muted">Last updated {{ obj.updated }} | Author {{ obj.user }}</small></p>

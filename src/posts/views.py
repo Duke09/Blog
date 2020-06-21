@@ -9,7 +9,9 @@ from .forms import PostForm
 
 # Create your views here.
 def post_home(request):
-    qs_list = Post.objects.all()        #.order_by("-timestamp")
+    qs_list = Post.objects.active()        #.order_by("-timestamp")
+    if request.user.is_staff or request.user.is_superuser:
+        qs_list = Post.objects.all()
     paginator = Paginator(qs_list, 2)
     page_num = 'page'
     page = request.GET.get(page_num)
@@ -71,6 +73,7 @@ def post_update(request, id):
 
 def post_delete(request, id):
     instance = get_object_or_404(Post, id=id)
-    instance.delete()
+    # instance.delete()
+    print(id)
     messages.success(request, "Post Deleted")
     return redirect("posts:home")
