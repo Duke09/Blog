@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block head %}
+{{form.media}}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col">
+        <h1>{{title}}</h1>
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <input type="submit" value="Create" class="btn btn-outline-primary">
+        </form>
+    </div>
+    <div class="col">
+        <h1>Preview</h1>
+        <div class="content-preview">
+            <h3 id="preview-title"></h3>
+            <p><div id="preview-content"></div></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

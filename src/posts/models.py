@@ -3,13 +3,22 @@ from django.urls import reverse
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from django.conf import settings
+from django.utils.safestring import mark_safe
+from markdown_deux import markdown
 
 User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class PostManager(models.Manager):
     def active(self, *args, **kwargs):
-        return super(PostManager, self).filter(draft=False).filter(publish__lte=timezone.now())
+        return super(
+            PostManager, 
+            self
+        ).filter(
+            draft=False
+        ).filter(
+            publish__lte=timezone.now()
+        )
 
 class Post(models.Model):
     user = models.ForeignKey(
@@ -63,6 +72,10 @@ class Post(models.Model):
         return reverse("posts:detail", kwargs={
             "id": self.id
         })
+
+    def get_markdown(self):
+        content = self.content
+        return mark_safe(markdown(content))
 
     class Meta:
         ordering = [

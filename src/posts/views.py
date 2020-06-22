@@ -60,9 +60,10 @@ def post_create(request):
         messages.success(request, "Post Created")
         return HttpResponseRedirect(instance.get_absolute_url())
     context = {
-        "form": form
+        "form": form,
+        "title": "New"
     }
-    return render(request, "posts/create.html", context)
+    return render(request, "posts/form.html", context)
 
 def post_update(request, id):
     if not request.user.is_authenticated:
@@ -77,9 +78,10 @@ def post_update(request, id):
         return HttpResponseRedirect(instance.get_absolute_url())
     context = {
         "obj": instance,
-        "form": form
+        "form": form,
+        "title": "Edit"
     }
-    return render(request, "Posts/update.html", context)
+    return render(request, "Posts/form.html", context)
 
 def post_delete(request, id):
     instance = get_object_or_404(Post, id=id)

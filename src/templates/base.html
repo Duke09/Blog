@@ -12,6 +12,12 @@
   {% block head %}
   {% endblock %}
 
+<style>
+  .wmd-preview{
+    display: none;
+}
+</style>
+
 </head>
 <body>
   <div id="fb-root"></div>
@@ -81,12 +87,47 @@
     
     <script>
       $(document).ready(function(){
-        $('.content-markdown').each(function(){
-          var content = $(this).text()
-          console.log(content)
-          var markdown = marked(content)
-          console.log(markdown)
-          $(this).html(markdown)
+        // $('.content-markdown').each(function(){
+        //   var content = $(this).text()
+        //   console.log(content)
+        //   var markdown = marked(content)
+        //   console.log(markdown)
+        //   $(this).html(markdown)
+        // })
+
+        $('.post-item img').each(function(){
+          $(this).addClass('img-fluid');
+        })
+
+        var titleVal = $('#id_title')
+        // console.log(titleVal)
+        // $('#preview-title').text(titleVal.val())
+
+        function setTitle(value){
+          $("#preview-title").text(value)
+        }
+        setTitle(titleVal.val())
+
+        titleVal.keyup(function(){
+          var newTitle = $(this).val()
+          setTitle(newTitle)
+        })
+        
+        var contentVal = $('#wmd-input-id_content')
+        // console.log(contentVal)
+        // $('#preview-content').html(marked(contentVal))
+        function setContent(value){
+          var markedContent = marked(value)
+          $('#preview-content').html(markedContent)
+          $('#preview-content img').each(function(){
+            $(this).addClass("img-fluid")
+          })
+        }
+        setContent(contentVal.val())
+
+        contentVal.keyup(function(){
+          var newContent = $(this).val()
+          setContent(newContent)
         })
       })
     </script>

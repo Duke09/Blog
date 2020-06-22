@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'posts',
     'pagedown',
+    'markdown_deux',
 ]
 
 MIDDLEWARE = [
