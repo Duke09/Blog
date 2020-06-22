@@ -15,3 +15,12 @@
 .blockquote-footer{
     font-size: 12px;
 }
+
+.wmd-preview{
+    display: none;
+}
+
+.wmd-panel{
+    margin: 0 !important;
+    width: 100% !important;
+}
