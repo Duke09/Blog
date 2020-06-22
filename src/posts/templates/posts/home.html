@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
               <blockquote class="blockquote mb-0">
-                <p>{{ obj.content|linebreaks|truncatewords:10 }}</p>
+                <p><div class="content-markdown">{{ obj.content }}</div></p>
                 <footer class="blockquote-footer">{{ obj.timestamp }} | Author {{ obj.user }}</footer>
               </blockquote>
             </div>

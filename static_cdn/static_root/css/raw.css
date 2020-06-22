@@ -4,10 +4,14 @@
     box-sizing: border-box;
 }
 
-a{
+.container{
+    margin-top: 5em;
+}
+
+.card .card-btn{
     text-decoration: none;
 }
 
-.container{
-    margin-top: 5em;
+.blockquote-footer{
+    font-size: 12px;
 }
