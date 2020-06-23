@@ -24,3 +24,7 @@
     margin: 0 !important;
     width: 100% !important;
 }
+
+.comment .lead{
+    font-size: 12px;
+}

@@ -3,6 +3,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.contenttypes.models import ContentType
+
+from comments.models import Comment
 
 from .models import Post
 from .forms import PostForm
@@ -42,9 +45,19 @@ def post_home(request):
 def post_detail(request, id):
     instance = get_object_or_404(Post, id=id)
     # share_string = quote_plus(instance.content)
+
+    content_type = ContentType.objects.get_for_model(Post)
+    obj_id = instance.id
+
+    comments = Comment.objects.filter(
+        content_type=content_type,
+        object_id=obj_id
+    )
+
     context = {
         'obj': instance,
         # "share_string": share_string
+        'comments': comments
     }
     return render(request, "posts/detail.html", context)
 

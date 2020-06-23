@@ -26,7 +26,15 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5" data-width=""></div>
+                <h5 class="lead">Comments</h5>
+                {% for comment in comments %}
+                    <div class="container comment">
+                        {{ comment.content }}
+                        <p class="lead">{{comment.user}} | {{comment.timestamp}}</p>
+                        <hr>
+                    </div>
+                {% endfor %}
+                <!-- <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5" data-width=""></div> -->
             </div>
         </div>
     </div>
