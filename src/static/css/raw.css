@@ -25,6 +25,23 @@
     width: 100% !important;
 }
 
-.comment .lead{
-    font-size: 12px;
+.comment{
+    margin-top: 1em;
+}
+
+.comment .blockquote{
+    margin-top: 1em;
+}
+
+.card-body label{
+    display: none;
+}
+
+#id_content{
+    max-width: 100%;
+    width: 100%;
+}
+
+.card-body button{
+    float: right;
 }
