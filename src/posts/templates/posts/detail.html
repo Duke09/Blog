@@ -43,9 +43,22 @@
                                 <form action="" method="POST" class="reply">
                                     {% csrf_token %}
                                     {{ form|crispy }}
+                                    <input type="hidden" name='parent_id' value='{{ comment.id }}'>
                                     <button class="btn btn-primary" type="submit">Reply</button>
                                 </form>
                             </div>
+                            {% if comment.children %}
+                            <br>
+                            <div class="container">
+                                {% for child_comment in comment.children %}
+                                    <blockquote class="blockquote">
+                                        <p>{{ child_comment.content }}</p>
+                                        <footer class="blockquote-footer">{{ child_comment.user }} | <cite title="Source Title">{{ comment.timestamp }}</cite></footer>
+                                    </blockquote>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {% endif %}
                         </blockquote>
                     </div>
                     <br>
