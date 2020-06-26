@@ -6,6 +6,8 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 from markdown_deux import markdown
 from django.contrib.contenttypes.models import ContentType
+from django.utils import timezone
+
 from comments.models import Comment
 
 User = settings.AUTH_USER_MODEL
@@ -117,4 +119,3 @@ def post_receiver(sender, instance, *args, **kwargs):
         instance.slug = slug_generator(instance)
 
 pre_save.connect(post_receiver, sender=Post)
-from django.utils import timezone

@@ -21,13 +21,13 @@ class CommentManager(models.Manager):
             content_type=content_type,
             object_id=obj_id
         )
-
         return qs
 
 class Comment(models.Model):
     user = models.ForeignKey(
         User,
-        on_delete=models.CASCADE)
+        on_delete=models.CASCADE
+    )
 
     content_type = models.ForeignKey(
         ContentType, 
@@ -43,6 +43,13 @@ class Comment(models.Model):
 
     content = models.TextField()
 
+    parent = models.ForeignKey(
+        "self",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
+    )
+
     timestamp = models.DateTimeField(
         auto_now_add=True
     )
@@ -51,3 +58,19 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.user.username)  
+
+    def children(self):
+        return Comment.objects.filter(
+            parent=self
+        )
+
+    @property
+    def is_parent(self):
+        if self.parent is not None:
+            return False
+        return True
+
+    class Meta:
+        ordering = [
+            "-timestamp"
+        ]

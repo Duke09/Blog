@@ -74,6 +74,9 @@ def post_detail(request, id):
             object_id=obj_id,
             content=content_data
         )
+        return HttpResponseRedirect(
+            new_comment.content_object.get_absolute_url()
+        )
 
     comments = instance.comments
 
