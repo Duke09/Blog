@@ -38,15 +38,17 @@
                     <div class="container comment">
                         <blockquote class="blockquote">
                             <p class="mb-0">{{ comment.content }}</p>
-                            <footer class="blockquote-footer">{{comment.user}} on <cite title="Source Title">{{comment.timestamp}}</cite></footer>
-                            <div class="container">
-                                <form action="" method="POST" class="reply">
+                            <footer class="blockquote-footer">
+                                {{ comment.user }} on 
+                                <cite title="Source Title">{{ comment.timestamp }} | </cite>
+                                <a href="{{ comment.get_absolute_url }}">View</a>
+                            </footer>
+                                <!-- <form action="" method="POST" class="reply">
                                     {% csrf_token %}
                                     {{ form|crispy }}
                                     <input type="hidden" name='parent_id' value='{{ comment.id }}'>
                                     <button class="btn btn-primary" type="submit">Reply</button>
                                 </form>
-                            </div>
                             {% if comment.children %}
                             <br>
                             <div class="container">
@@ -58,10 +60,9 @@
                                 {% endfor %}
                             </div>
                             {% else %}
-                            {% endif %}
+                            {% endif %} -->
                         </blockquote>
                     </div>
-                    <br>
                     <br>
                     <hr>
                 {% endfor %}

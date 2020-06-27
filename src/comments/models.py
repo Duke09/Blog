@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse
 
 User = settings.AUTH_USER_MODEL
 
@@ -74,6 +75,9 @@ class Comment(models.Model):
         return Comment.objects.filter(
             parent=self
         )
+
+    def get_absolute_url(self):
+        return reverse("comment:thread", kwargs={"id": self.id})
 
     @property
     def is_parent(self):
